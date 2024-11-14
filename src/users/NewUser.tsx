@@ -1,30 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-interface User {
-  id?: string;
-  username: string;
-  password: string;
-  org: string;
-  area: string;
-}
-interface Props {
-  addUser: (newuser: User) => void;
-}
 
-export default function NewUser(props: Props) {
+
+export default function NewUser() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [org, setOrg] = useState("");
   const [area, setArea] = useState("");
 
+  const register = async (username: string, password: string, org: string, area: string): Promise<boolean> => {
+   try {
+    const response = await fetch("http://localhost:3000/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify( {username, password, org, area} ),
+    });
+    
+
+    if (!response.ok) {
+      return false;
+    }
+
+
+    const data = await response.json();
+    console.log(data);
+    return true
+   } catch (error) {
+    
+    console.error("Login failed");
+    return false;
+   }
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    props.addUser({
+    register(
       username,
       password,
       org,
       area,
-    });
+    );
     setUsername("");
     setPassword("");
     setOrg("");
@@ -48,12 +63,12 @@ export default function NewUser(props: Props) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="password">Password</label>
             <input
-              id="email"
+              id="Password"
               type="text"
               value={password}
-              placeholder="Enter your Email"
+              placeholder="Enter your Password"
               onChange={(event) => {
                 setPassword(event.target.value);
               }}
@@ -61,7 +76,7 @@ export default function NewUser(props: Props) {
           </div>
 
           <div className="form-group">
-            <label htmlFor="org">org</label>
+            <label htmlFor="org">Org</label>
             <input
               id="org"
               type="text"
@@ -77,10 +92,10 @@ export default function NewUser(props: Props) {
             <label htmlFor="area">Area</label>
             <input
               id="area"
-              type="number"
+              type="text"
               min={0}
               value={area}
-              placeholder="0"
+              placeholder="Area"
               onChange={(event) => {
                 setArea(event.target.value);
               }}

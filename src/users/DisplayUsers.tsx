@@ -4,19 +4,16 @@ import PageHeader from "../components/PageHeader";
 interface User {
   id?: string;
   username: string;
-  email: string;
-  age: number;
-  img: string;
+  password: string;
+  org: string;
+  area: string;
 }
 
 interface Props {
   users: User[];
-  deleteUser: (id: string) => void;
-  updateUser: (user: User) => void;
-  addNewStar: (user: User) => void;
 }
 
-export default function DisplayUsers({ users, updateUser, addNewStar }: Props) {
+export default function DisplayUsers({ users }: Props) {
   return (
     <>
       <PageHeader
@@ -30,28 +27,13 @@ export default function DisplayUsers({ users, updateUser, addNewStar }: Props) {
       <div className="card-list">
         {users.map((user) => (
           <div key={user.id} className="user-card">
-            <img
-              src={user.img}
-              alt={`${user.username}'s avatar`}
-              className="user-avatar"
-            />
             <div className="user-info">
               <h3>{user.username}</h3>
-              <p>Email: {user.email}</p>
-              <p>Age: {user.age}</p>
+              <p>Password: {user.password}</p>
+              <p>Org: {user.org}</p>
+              <p>Area: {user.area}</p>
             </div>
             <div className="user-actions">
-              <button
-                onClick={() => {
-                  updateUser(user);
-                }}
-              >
-                <NavLink to={`/users/edit/${user.id}`}>Edit</NavLink>
-              </button>
-
-              <button onClick={() => addNewStar(user)} className="star-button">
-                Add Star
-              </button>
             </div>
           </div>
         ))}

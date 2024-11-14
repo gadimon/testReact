@@ -1,10 +1,9 @@
-import { StrictMode, useContext } from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
-import { BrowserRouter, Navigate } from "react-router-dom";
+import { BrowserRouter} from "react-router-dom";
 
-import { AuthContext, AuthProvider } from "./providers/authProvider.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
+import { AuthProvider } from "./providers/AuthProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -16,7 +15,3 @@ createRoot(document.getElementById("root")!).render(
   </StrictMode>
 );
 
-const LoginRedirect = () => {
-  const authContext = useContext(AuthContext);
-  return authContext?.user ? <Navigate to="/" /> : <LoginPage />;
-};
