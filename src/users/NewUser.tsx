@@ -1,45 +1,41 @@
 import React, { useState } from "react";
 
-
-
 export default function NewUser() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [org, setOrg] = useState("");
   const [area, setArea] = useState("");
 
-  const register = async (username: string, password: string, org: string, area: string): Promise<boolean> => {
-   try {
-    const response = await fetch("http://localhost:3000/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify( {username, password, org, area} ),
-    });
-    
+  const register = async (
+    username: string,
+    password: string,
+    org: string,
+    area: string
+  ): Promise<boolean> => {
+    try {
+      
+      const response = await fetch("http://localhost:3000/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password, org, area }),
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
+        return false;
+      }
+
+      const data = await response.json();
+      console.log(data);
+      return true;
+    } catch (error) {
+      console.error("Login failed");
       return false;
     }
-
-
-    const data = await response.json();
-    console.log(data);
-    return true
-   } catch (error) {
-    
-    console.error("Login failed");
-    return false;
-   }
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    register(
-      username,
-      password,
-      org,
-      area,
-    );
+    register(username, password, org, area);
     setUsername("");
     setPassword("");
     setOrg("");
@@ -86,6 +82,25 @@ export default function NewUser() {
                 setOrg(event.target.value);
               }}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="org">Org</label>
+            <select
+              name="Org"
+              id="org"
+              value={org}
+              onChange={(event) => {
+                setOrg(event.target.value);
+              }}
+            >
+              <option value="IDF - North">IDF - North</option>
+              <option value="IDF - South">IDF - South</option>
+              <option value="IDF - Center">IDF - Center</option>
+              <option value="Hezbollah">Hezbollah</option>
+              <option value="Hamas">Hamas</option>
+              <option value="IRGC">IRGC</option>
+              <option value="Houthis">Houthis</option>
+            </select>
           </div>
 
           <div className="form-group">

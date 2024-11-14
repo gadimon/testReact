@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import NewUser from "./NewUser";
 import DisplayUsers from "./DisplayUsers";
 import { Route, Routes } from "react-router-dom";
+import DisplayOrg from "./displayOrg";
 
 import DisplayUsers2 from "./DisplayUsers2";
+import DisplayMissiles from "./displayMissiles";
 interface User {
   id?: string;
   username: string;
@@ -36,6 +38,8 @@ export default function Users() {
         />
         <Route path="/adduser" element={<NewUser/>} />
         <Route path="/display" element={<DisplayUsers2 />} />
+        <Route path="/displayMissiles" element={<DisplayMissiles />} />
+        {/* <Route path="/displayOrg" element={<DisplayOrg users={users[0]}/>} /> */}
       </Routes>
     </>
   );

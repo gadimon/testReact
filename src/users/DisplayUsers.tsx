@@ -30,7 +30,16 @@ export default function DisplayUsers({ users }: Props) {
             <div className="user-info">
               <h3>{user.username}</h3>
               <p>Password: {user.password}</p>
-              <p>Org: {user.org}</p>
+              {/* <p>Org: {user.org}</p> */}
+              <select name="Org" id="org">
+                  <option value="IDF - North">IDF - North</option>
+                  <option value="IDF - South">IDF - South</option>
+                  <option value="IDF - Center">IDF - Center</option>
+                  <option value="Hezbollah">Hezbollah</option>
+                  <option value="Hamas">Hamas</option>
+                  <option value="IRGC">IRGC</option>
+                  <option value="Houthis">Houthis</option>
+              </select>
               <p>Area: {user.area}</p>
             </div>
             <div className="user-actions">

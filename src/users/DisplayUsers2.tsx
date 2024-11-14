@@ -14,9 +14,7 @@ export default function DisplayUsers2() {
         Add user
       </NavLink>
 
-     
-      <PageHeader title="Stars" subtitle="This is my STAR'S!!" />
-     
+       
     </>
   );
 }
