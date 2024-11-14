@@ -1,5 +1,4 @@
-import React, { Children } from "react";
-import Users from "../../users/Users";
+import React from "react";
 
 interface Props {
   children: React.ReactNode;

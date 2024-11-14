@@ -54,11 +54,11 @@ const LoginPage = () => {
         <h2 className="login-title">התחברות</h2>
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label htmlFor="email">אימייל</label>
+            <label htmlFor="text">שם משתמש</label>
             <input
               id="email"
               type="text"
-              placeholder="הכנס את ao na,na"
+              placeholder="הכנס את השם משתמש"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
               required
