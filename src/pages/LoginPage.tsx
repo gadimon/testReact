@@ -35,7 +35,6 @@ const LoginPage = () => {
     try {
       const success = await login!(userName, password);
       if (success) {
-        // המשתמש יועבר דרך useEffect
       } else {
         setError("שם משתמש או סיסמה לא נכונים");
         setPassword("");

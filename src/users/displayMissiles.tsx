@@ -1,74 +1,69 @@
 import { useEffect, useState } from "react";
 
-export default function DisplayMissiles() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [speed, setSpeed] = useState("");
-  const [intercepts, setIntercepts] = useState("");
-  const [price, setPrice] = useState("");
-  const [missiles, setMissiles] = useState([])
-  const getMissiles = async (
-    name: string,
-    description: string,
-    speed: number,
-    intercepts: string[],
-    price: number
-  ) => {
-    useEffect(() => {
-      (async ()=>{
-        try {
-            const response = await fetch("http://localhost:3000/data", {
-              method: "GET",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ name, description, speed, intercepts, price}),
-            });
-      
-            if (!response.ok) {
-              return false;
-            }
-      
-            const missiles = await response.json();
-            
-            return true;
-          } catch (error) {
-            console.error("Get failed");
-            return false;
-          }})()
-        
+interface Missile {
+  id: string;
+  name: string;
+  description: string;
+  speed: number;
+  intercepts: string[];
+  price: number;
+}
 
-    }, [])}
+export default function DisplayMissiles() {
+  const [missiles, setMissiles] = useState<Missile[]>([]);
+
+  useEffect(() => {
+    const fetchMissiles = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/data", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setMissiles(data);
+        } else {
+          console.error("Failed to fetch missiles");
+        }
+      } catch (error) {
+        console.error("Get failed", error);
+      }
+    };
+
+    fetchMissiles();
+  }, []);
 
   return (
-    <>
-
-      <div className="form-container">
+    <div className="form-container">
       <div className="App">
-        {}
-    <table>
-        <tr>
-            <th>Rocket</th>
-            <th>Time to Hit</th>
-            <th>Price</th>
-            <th>Buy</th>
-        </tr>
-        <tr>
-            <td>{}</td>
-            <td>19</td>
-            <td>Male</td>
-        </tr>
-        <tr>
-            <td>Megha</td>
-            <td>19</td>
-            <td>Female</td>
-        </tr>
-        <tr>
-            <td>Subham</td>
-            <td>25</td>
-            <td>Male</td>
-        </tr>
-    </table>
-</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Speed</th>
+              <th>Intercepts</th>
+              <th>Price</th>
+              <th>Buy</th>
+            </tr>
+          </thead>
+          <tbody>
+            {missiles.map((missile) => (
+              <tr key={missile.id}>
+                <td>{missile.name}</td>
+                <td>{missile.description}</td>
+                <td>{missile.speed}</td>
+                <td>{missile.intercepts}</td>
+                <td>{missile.price}</td>
+                <td>
+                  <button>Buy</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </>
+    </div>
   );
 }
